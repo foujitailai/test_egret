@@ -37,7 +37,7 @@ class ButtonAniTool
 
 class mytestui extends eui.Component
 {
-    public SKIN_NAME:string = "testui";
+    public SKIN_NAME:string = "TestTest";
 
     public IsLoadOk:boolean = false;
 
@@ -59,6 +59,8 @@ class mytestui extends eui.Component
     {
 		this.TestBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onBtnClicked, this);
         ButtonAniTool.AddScaleAni(this.TestBtn);
+
+
     }
 
     public async Load()
@@ -66,7 +68,7 @@ class mytestui extends eui.Component
         let src=this;
         src.addEventListener(egret.Event.COMPLETE, () => {
                 src.IsLoadOk = true;
-                src.Init();
+                //src.Init();
             }, this);
         src.skinName = this.SKIN_NAME;
     }

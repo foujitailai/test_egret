@@ -162,6 +162,9 @@ class Main extends eui.UILayer {
         this.addChild(tui);
         tui.Show();
 
+
+        this.onButtonClick(null);
+
     }
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -203,11 +206,67 @@ class Main extends eui.UILayer {
         change();
     }
 
+
+    private TestDotNor(cp:number[],tp:number[],moveVer:number[])
+    {
+        let cpnor = [0,0];
+        p2.vec2.normalize(cpnor, cp);
+        let tpnor = [0,0];
+        p2.vec2.normalize(tpnor, tp);
+
+        let curVer = [0,0];
+        p2.vec2.sub(curVer, tp,  cp);
+        let cvnor = [0,0];
+        p2.vec2.normalize(cvnor, curVer);
+        let mvnor = [0,0];
+        p2.vec2.normalize(mvnor, moveVer);
+        return p2.vec2.dot(mvnor, cvnor);
+    }
+    private TestDot(cp:number[],tp:number[],moveVer:number[])
+    {
+        let curVer = [0,0];
+        p2.vec2.sub(curVer, tp,  cp);
+        return p2.vec2.dot(moveVer, curVer);
+    }
+    private ScreenPosCovP2Pos(x:number, y:number):number[]
+    {
+        return [x,-y];
+    }
     /**
      * 点击按钮
      * Click the button
      */
     private onButtonClick(e: egret.TouchEvent) {
+
+
+
+        let sx = 10;
+        let sy = 20;
+        let tx = 50;
+        let ty = 30;
+        
+        //let 
+        let sp = this.ScreenPosCovP2Pos(sx, sy);
+        let tp = this.ScreenPosCovP2Pos(tx, ty);
+        let moveVer = [0,0];
+        p2.vec2.sub(moveVer, tp, sp);
+
+
+        let cd = this.TestDot(this.ScreenPosCovP2Pos(10, 20), tp, moveVer);
+        egret.assert(cd > 0);
+
+        let cd2 = this.TestDot(this.ScreenPosCovP2Pos(50, 30), tp, moveVer);
+        egret.assert(cd2 == 0);
+
+        let cd3 = this.TestDot(this.ScreenPosCovP2Pos(tx-sx+tx, ty-sy+ty), tp, moveVer);
+        egret.assert(cd3 < 0);
+
+
+
+return;
+
+
+
         let panel = new eui.Panel();
         panel.title = "Title";
         panel.horizontalCenter = 0;
